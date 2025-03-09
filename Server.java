@@ -38,7 +38,7 @@ public class Server extends Thread {
     {
     	if ( !(Network.getServerConnectionStatus().equals("connected")))
     	{
-    		System.out.println("\n Initializing the server ...");
+    	    System.out.println("\n Initializing the server ...");
     		numberOfTransactions = 0;
     		numberOfAccounts = 0;
     		maxNbAccounts = 100;
@@ -48,14 +48,12 @@ public class Server extends Thread {
     		System.out.println("\n Inializing the Accounts database ...");
     		initializeAccounts( );
     		System.out.println("\n Connecting server to network ...");
-    		if (!(Network.connect(Network.getServerIP())))
-    		{
+    		if (!(Network.connect(Network.getServerIP()))) {
     			System.out.println("\n Terminating server application, network unavailable");
     			System.exit(0);
     		}
     	}
-    	else
-    	{
+    	else {
     		serverThreadId = stid;							/* unshared variable so each thread has its own copy */
     		serverThreadRunningStatus2 = "idle";				
     	}
