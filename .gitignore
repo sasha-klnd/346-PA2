@@ -1,3 +1,9 @@
+# Misc
+.pdf
+.vscode/
+.DS_Store
+.DS_Store?
+
 # Compiled class file
 *.class
 
