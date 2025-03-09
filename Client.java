@@ -141,10 +141,9 @@ public class Client extends Thread {
         
         while (i < getNumberOfTransactions()) {  
 	
-            // while (Network.getInBufferStatus().equals("full"))
-        //	{ 
-        // 	  Thread.yield(); 	/* Yield the cpu if the network input buffer is full */
-        //  }
+            while (Network.getInBufferStatus().equals("full")) { 
+        	    Thread.yield(); 	/* Yield the cpu if the network input buffer is full */
+            }
                                               	
             transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
             /* System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber()); */ 

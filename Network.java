@@ -377,7 +377,6 @@ public class Network extends Thread {
         return true;
     }   
          
-    
     /**
      *  Transferring the completed transactions from the server to the network buffer
      *  
