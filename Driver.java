@@ -49,6 +49,7 @@ public class Driver {
             System.out.println(e.getMessage());
       }
       
+      System.out.println("All disconnected");
 
     }
 

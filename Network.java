@@ -502,11 +502,10 @@ public class Network extends Thread {
     	
     	System.out.println("\n DEBUG : Network.run() - starting network thread");
 
-    	while (!getClientConnectionStatus().equals("disconnected") || !getServerConnectionStatus().equals("disconnected"))
-    	{
+    	while (!getClientConnectionStatus().equals("disconnected") || !getServerConnectionStatus().equals("disconnected")) {
             Thread.yield();
         }
 
-        System.out.println("Terminating network thread - Client disconnected Server disconnected");  
+        System.out.println(" DISCONNECT : Terminating network thread - Client disconnected Server disconnected");  
     }
 }

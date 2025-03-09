@@ -162,10 +162,10 @@ public class Client extends Thread {
         int i = 0;     /* Index of transaction array */
          
         while (i < getNumberOfTransactions()) {   
-            // while (Network.getOutBufferStatus().equals("empty")) 
-        	// { 
-        	//	 Thread.yield(); 	/* Yield the cpu if the network output buffer is full */	 
-        	// }
+            while (Network.getOutBufferStatus().equals("empty")) { 
+        		Thread.yield(); 	/* Yield the cpu if the network output buffer is full */	 
+        	}
+
             Network.receive(transact);                               	/* Receive updated transaction from the network buffer */
             /* System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account " + transact.getAccountNumber()); */
             System.out.println(transact);                               /* Display updated transaction */    
@@ -195,7 +195,6 @@ public class Client extends Thread {
         Boolean receiveFlag = true;
     
         if (getClientOperation().equals("sending")) {
-
             sendClientStartTime = System.currentTimeMillis();
 
             sendTransactions();
@@ -203,7 +202,6 @@ public class Client extends Thread {
             sendClientEndTime = System.currentTimeMillis();
             sendFlag = false;
             System.out.println("\nTerminating client sending thread - " + " Running time " + (sendClientEndTime - sendClientStartTime) + " milliseconds");
-
         }
         
         else if (getClientOperation().equals("receiving")) {
@@ -216,8 +214,9 @@ public class Client extends Thread {
             receiveFlag = false;
 
             System.out.println("\nTerminating client receiving thread - " + " Running time " + (receiveClientEndTime - receiveClientStartTime) + " milliseconds");
-            Network.disconnect(Network.getClientIP());
 
+            System.out.println("DISCONNECT : disconnecting client application");
+            Network.disconnect(Network.getClientIP());
         }
     }             
 }

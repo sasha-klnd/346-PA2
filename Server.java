@@ -317,7 +317,6 @@ public class Server extends Thread {
                                                                                 * Count the number of transactions processed
                                                                                 */
                     }
-                    System.out.println("Account updated: " +  account[0].getBalance());
 
 
             }
@@ -450,7 +449,7 @@ public class Server extends Thread {
                 break;
         }
 
-        System.out.println("DEBUG : Both server threads finished execution - disconnecting from network");
+        System.out.println(" DISCONNECT : Both server threads finished execution, disconnecting from network");
         Network.disconnect(Network.getServerIP());
     }
 }
