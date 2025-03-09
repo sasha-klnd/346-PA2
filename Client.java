@@ -125,7 +125,7 @@ public class Client extends Thread {
         }
         setNumberOfTransactions(i);		/* Record the number of transactions processed */
         
-        /* System.out.println("\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed"); */
+        System.out.println("\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed");
         
         inputStream.close();
     }
@@ -202,11 +202,6 @@ public class Client extends Thread {
 
             sendClientEndTime = System.currentTimeMillis();
             sendFlag = false;
-            
-            // if (objNetwork.getOutBufferStatus().equals("empty")) {
-            //     objNetwork.disconnect(objNetwork.getClientIP());
-            // }
-
             System.out.println("\nTerminating client sending thread - " + " Running time " + (sendClientEndTime - sendClientStartTime) + " milliseconds");
 
         }

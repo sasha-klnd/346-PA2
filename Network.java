@@ -422,14 +422,14 @@ public class Network extends Thread {
         inPacket.setTransactionError(inComingPacket[outputIndexServer].getTransactionError());
         inPacket.setTransactionStatus("received");
 
-        /* System.out.println("\n DEBUG : Network.transferIn() - index outputIndexServer " + outputIndexServer); */
-        /* System.out.println("\n DEBUG : Network.transferIn() - account number " + inPacket.getAccountNumber()); */
+        System.out.println("\n DEBUG : Network.transferIn() - index outputIndexServer " + outputIndexServer);
+        System.out.println("\n DEBUG : Network.transferIn() - account number " + inPacket.getAccountNumber());
 
         setoutputIndexServer(((getoutputIndexServer() + 1) % getMaxNbPackets()));	/* Increment the input buffer index for the server */
         /* Check if input buffer is empty */
         if ( getoutputIndexServer( ) == getinputIndexClient( )) {
             setInBufferStatus("empty");
-            /* System.out.println("\n DEBUG : Network.transferIn() - inComingBuffer status " + getInBufferStatus()); */
+            System.out.println("\n DEBUG : Network.transferIn() - inComingBuffer status " + getInBufferStatus());
         }
         else {
             setInBufferStatus("normal");
