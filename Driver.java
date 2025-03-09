@@ -14,12 +14,12 @@ import javax.sql.rowset.serial.SerialArray;
  */
 public class Driver {
 
-    /** 
+    /**
      * main class
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+
         Network objNetwork = new Network( );            /* Activate the network */
         Client objClient1 = new Client("sending");          /* Start the sending client thread */
         Client objClient2 = new Client("receiving");        /* Start the receiving client thread */
@@ -41,7 +41,7 @@ public class Driver {
             System.out.println(e.getMessage());
       }
       /*..............................................................................................................................................................*/
-       
+
     }
-    
+
  }
