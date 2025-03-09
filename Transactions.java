@@ -33,16 +33,15 @@ public class Transactions {
         transactionStatus = " ";
     }
     
-     /**
+    /**
       *  Accessor method of Transactions class
      * 
      * @return accountNumber
      * @param
      */
-     public String getAccountNumber()
-     {
-         return accountNumber;
-     }
+    public String getAccountNumber() {
+        return accountNumber;
+    }
          
     /**
      *  Mutator method of Transactions class
@@ -50,10 +49,9 @@ public class Transactions {
      * @return 
      * @param accNumber
      */
-     public void setAccountNumber(String accNumber)
-     { 
-         accountNumber = accNumber;
-     }
+    public void setAccountNumber(String accNumber) { 
+        accountNumber = accNumber;
+    }
      
     /**
      *  Accessor method of Transactions class
@@ -61,10 +59,9 @@ public class Transactions {
      * @return operationType
      * @param
      */
-     public String getOperationType()
-     {
-         return operationType;
-     }
+    public String getOperationType() {
+        return operationType;
+    }
          
     /**
      *  Mutator method of Transactions class
@@ -72,10 +69,9 @@ public class Transactions {
      * @return 
      * @param opType
      */
-     public void setOperationType(String opType)
-     { 
-         operationType = opType;
-     }
+    public void setOperationType(String opType) { 
+        operationType = opType;
+    }
      
     /**
      *  Accessor method of Transactions class
@@ -83,10 +79,9 @@ public class Transactions {
      * @return transactionAmount
      * @param
      */
-     public double getTransactionAmount()
-     {
-         return transactionAmount;
-     }
+    public double getTransactionAmount() {
+        return transactionAmount;
+    }
          
     /**
      *  Mutator method of Transactions class
@@ -94,10 +89,9 @@ public class Transactions {
      * @return 
      * @param transmount
      */
-     public void setTransactionAmount(double transAmount)
-     { 
-         transactionAmount = transAmount;
-     }
+    public void setTransactionAmount(double transAmount) { 
+        transactionAmount = transAmount;
+    }
      
     /**
      *  Accessor method of Transactions class
@@ -105,10 +99,9 @@ public class Transactions {
      * @return transactionBalance
      * @param
      */
-     public double getTransactionBalance()
-     {
-         return transactionBalance;
-     }
+    public double getTransactionBalance() {
+        return transactionBalance;
+    }
          
     /**
      *  Mutator method of Transactions class
@@ -116,10 +109,9 @@ public class Transactions {
      * @return 
      * @param transBalance
      */
-     public void setTransactionBalance(double transBalance)
-     { 
-         transactionBalance = transBalance;
-     }
+    public void setTransactionBalance(double transBalance) { 
+        transactionBalance = transBalance;
+    }
      
     /**
      *  Accessor method of Transactions class
@@ -127,10 +119,9 @@ public class Transactions {
      * @return transactionError
      * @param
      */
-     public String getTransactionError()
-     {
-         return transactionError;
-     }
+    public String getTransactionError() {
+        return transactionError;
+    }
      
     /** 
      * Mutator method of Transactions class
@@ -138,10 +129,9 @@ public class Transactions {
      * @return 
      * @param transError
      */
-     public void setTransactionError(String transError)
-     { 
-         transactionError = transError;
-     }
+    public void setTransactionError(String transError) { 
+        transactionError = transError;
+    }
      
     /**
      *  Accessor method of Transactions class
@@ -149,10 +139,9 @@ public class Transactions {
      * @return transactionStatus
      * @param
      */
-     public String getTransactionStatus()
-     {
-         return transactionStatus;
-     }
+    public String getTransactionStatus() {
+        return transactionStatus;
+    }
      
     /**
      *  Mutator method of Transactions class
@@ -160,21 +149,16 @@ public class Transactions {
      * @return 
      * @param transStatus
      */
-     public void setTransactionStatus(String transStatus)
-     { 
-         transactionError = transStatus;
-     }
+    public void setTransactionStatus(String transStatus) { 
+        transactionError = transStatus;
+    }
      
     /**
      *  Create a String representation based on the Transactions Object
      * 
      * @return String representation
      */
-    public String toString() 
-    {
+    public String toString() {
     	return ("\n Account number " + getAccountNumber() + " Account Balance " + getTransactionBalance() + " Message " + getTransactionError());
     }
-
 }
-
-
