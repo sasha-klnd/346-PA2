@@ -212,10 +212,8 @@ public class Server extends Thread {
         }
         setNumberOfAccounts(i); /* Record the number of accounts processed */
 
-        /*
-         * System.out.println("\n DEBUG : Server.initializeAccounts() " +
-         * getNumberOfAccounts() + " accounts processed");
-         */
+        System.out.println("\n DEBUG : Server.initializeAccounts() " +
+                getNumberOfAccounts() + " accounts processed");
 
         inputStream.close();
     }
@@ -248,10 +246,10 @@ public class Server extends Thread {
         int accIndex; /* Index position of account to update */
         double newBalance; /* Updated account balance */
 
-        /*
-         * System.out.println("\n DEBUG : Server.processTransactions() " +
-         * getServerThreadId() );
-         */
+
+         System.out.println("\n DEBUG : Server.processTransactions() " +
+         getServerThreadId() );
+
 
         /* Process the accounts until the client disconnects */
         while ((!Network.getClientConnectionStatus().equals("disconnected"))) {
@@ -262,11 +260,8 @@ public class Server extends Thread {
             // }
 
             if (!Network.getInBufferStatus().equals("empty")) {
-                /*
-                 * System.out.
-                 * println("\n DEBUG : Server.processTransactions() - transferring in account "
-                 * + trans.getAccountNumber());
-                 */
+                System.out.println("\n DEBUG : Server.processTransactions() - transferring in account "
+                        + trans.getAccountNumber());
 
                 Network.transferIn(trans); /* Transfer a transaction from the network input buffer */
 
@@ -277,10 +272,9 @@ public class Server extends Thread {
                     trans.setTransactionBalance(newBalance);
                     trans.setTransactionStatus("done");
 
-                    /*
-                     * System.out.println("\n DEBUG : Server.processTransactions() - Deposit of " +
-                     * trans.getTransactionAmount() + " in account " + trans.getAccountNumber());
-                     */
+                    System.out.println("\n DEBUG : Server.processTransactions() - Deposit of " +
+                            trans.getTransactionAmount() + " in account " + trans.getAccountNumber());
+
                 } else
                 /* Process withdraw operation */
                 if (trans.getOperationType().equals("WITHDRAW")) {
@@ -288,11 +282,10 @@ public class Server extends Thread {
                     trans.setTransactionBalance(newBalance);
                     trans.setTransactionStatus("done");
 
-                    /*
-                     * System.out.println("\n DEBUG : Server.processTransactions() - Withdrawal of "
-                     * + trans.getTransactionAmount() + " from account " +
-                     * trans.getAccountNumber());
-                     */
+                    System.out.println("\n DEBUG : Server.processTransactions() - Withdrawal of "
+                            + trans.getTransactionAmount() + " from account " +
+                            trans.getAccountNumber());
+
                 } else
                 /* Process query operation */
                 if (trans.getOperationType().equals("QUERY")) {
@@ -327,10 +320,8 @@ public class Server extends Thread {
             }
         }
 
-        /*
-         * System.out.println("\n DEBUG : Server.processTransactions() - " +
-         * getNumberOfTransactions() + " accounts updated");
-         */
+        System.out.println("\n DEBUG : Server.processTransactions() - " +
+                getNumberOfTransactions() + " accounts updated");
 
         return true;
     }
@@ -438,7 +429,7 @@ public class Server extends Thread {
             System.out.println("\nTerminating server thread - " + " Running time " + (serverEndTime1 - serverStartTime1)
                     + " milliseconds");
 
-                    flag1 = false;
+            flag1 = false;
         }
 
         if (getServerThreadId().equals("0002")) {
@@ -457,11 +448,11 @@ public class Server extends Thread {
             System.out.println("\nTerminating server thread - " + " Running time " + (serverEndTime2 - serverStartTime2)
                     + " milliseconds");
 
-                    flag2 = false;
+            flag2 = false;
 
         }
 
-        if (flag1 == false || flag2 == false) {
+        if (flag1 == false && flag2 == false) {
             Network.disconnect(Network.getServerIP());
 
         }
