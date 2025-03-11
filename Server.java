@@ -309,10 +309,15 @@ public class Server extends Thread {
                         * + trans.getAccountNumber());
                         */
 
-                        Network.transferOut(trans); /*
-                                                    * Transfer a completed transaction from the server to the network output
-                                                    * buffer
-                                                    */
+                        try {
+                            Network.transferOut(trans); /*
+                                                         * Transfer a completed transaction from the server to the network output
+                                                         * buffer
+                                                         */
+                        } catch (InterruptedException e) {
+                            System.out.println("Thread interrupted during Network.transferOut: " + e.getMessage());
+                            Thread.currentThread().interrupt(); // Preserve interrupt status
+                        }
                         setNumberOfTransactions((getNumberOfTransactions() + 1)); /*
                                                                                 * Count the number of transactions processed
                                                                                 */

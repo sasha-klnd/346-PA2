@@ -25,6 +25,7 @@ public class Driver {
         Client objClient2 = new Client("receiving");        /* Start the receiving client thread */
         Server objServer1 = new Server("0001");
         Server objServer2 = new Server("0002");
+        //Server objServer3 = new Server("0003");
 
         // Naming each thread for easier debugging
         objNetwork.setName("Network");
@@ -32,13 +33,17 @@ public class Driver {
         objClient2.setName("Client2");
         objServer1.setName("Server1");
         objServer2.setName("Server2");
+        //objServer3.setName("Server 3");
+
 
         objNetwork.start();
         objClient1.start();
         objClient2.start();
         objServer1.start();
         objServer2.start();
+        //objServer3.start();
 
+        /* adding a third server thread doesnt affect the running time */
         try {
             objNetwork.join();
             objClient1.join();
@@ -48,7 +53,7 @@ public class Driver {
         } catch (Exception e) {
             System.out.println(e.getMessage());
       }
-      
+
       System.out.println("All disconnected");
 
     }
