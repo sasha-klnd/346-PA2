@@ -1,0 +1,5 @@
+1. Explain your choice of using either synchronized methods or synchronized statements.
+
+2. Compare the running times of the server threads with busy-waiting compared to using semaphores.
+
+3. Implement a third server thread and comment about the running times compared to with two threads.

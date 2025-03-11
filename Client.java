@@ -139,6 +139,7 @@ public class Client extends Thread {
 
         while (i < getNumberOfTransactions()) {
 
+            // Busy-waiting
             while (Network.getInBufferStatus().equals("full")) {
                 Thread.yield(); /* Yield the cpu if the network input buffer is full */
             }
@@ -170,6 +171,7 @@ public class Client extends Thread {
         int i = 0; /* Index of transaction array */
 
         while (i < getNumberOfTransactions()) {
+            // Busy-waiting
             while (Network.getOutBufferStatus().equals("empty")) {
                 Thread.yield(); /* Yield the cpu if the network output buffer is full */
             }

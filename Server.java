@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -253,12 +255,10 @@ public class Server extends Thread {
 
         /* Process the accounts until the client disconnects */
         while ((!Network.getClientConnectionStatus().equals("disconnected"))) {
+            // Busy-waiting
             while ( (Network.getInBufferStatus().equals("empty") && !Network.getClientConnectionStatus().equals("disconnected")) ) {
-
-                if (Network.getClientConnectionStatus().equals("disconnected")) {
+                if (Network.getClientConnectionStatus().equals("disconnected"))
                     return true;
-                }
-
                 Thread.yield(); /* Yield the cpu if the network input buffer is empty */
             }
 
@@ -292,12 +292,11 @@ public class Server extends Thread {
                             trans.setTransactionStatus("done");
                             // System.out.println("\n DEBUG : Server.processTransactions() - Obtaining balance from account" + trans.getAccountNumber());
                         }
+
+                        // Busy-waiting
                         while (Network.getOutBufferStatus().equals("full")) {
-
-                            if (Network.getClientConnectionStatus().equals("disconnected")) {
+                            if (Network.getClientConnectionStatus().equals("disconnected"))
                                 return true;
-                            }
-
                             Thread.yield(); /* Yield the cpu if the network output buffer is full */
                         }
 
@@ -343,13 +342,12 @@ public class Server extends Thread {
          * NEW : A server thread is blocked before updating the 10th , 20th, ... 70th
          * account balance in order to simulate an inconsistency situation
          */
-        /* if (((i + 1) % 10) == 0) {
+        if (((i + 1) % 10) == 0) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
             }
-        } */
-        // Commented out the enforced delay to simulate inconsistency
+        }
 
         /* System.out.println("\n DEBUG : Server.deposit - " + "i " + i + " Current balance " + curBalance + " Amount "
                 + amount + " " + getServerThreadId()); */
@@ -413,6 +411,7 @@ public class Server extends Thread {
 
         Boolean server1Running = false;
         Boolean server2Running = false;
+        Boolean server3Running = false;
         Transactions trans = new Transactions();
 
         if (getServerThreadId().equals("0001")) {
@@ -426,7 +425,6 @@ public class Server extends Thread {
             serverEndTime1 = System.currentTimeMillis();
             server1Running = false;
             System.out.println("\nTerminating server thread 0001 - " + " Running time " + (serverEndTime1 - serverStartTime1) + " milliseconds");
-
         }
 
         if (getServerThreadId().equals("0002")) {
@@ -442,9 +440,23 @@ public class Server extends Thread {
             System.out.println("\nTerminating server thread 0002 - " + " Running time " + (serverEndTime2 - serverStartTime2) + " milliseconds");
         }
 
+        if (getServerThreadId().equals("0003")) {
+            server3Running = true;
+            long serverStartTime3, serverEndTime3;
+
+            // System.out.println("\n DEBUG : Server.run() - starting server thread " + Network.getServerConnectionStatus());
+
+            serverStartTime3 = System.currentTimeMillis();
+            processTransactions(trans);
+            serverEndTime3 = System.currentTimeMillis();
+            server3Running = false;
+            System.out.println("\nTerminating server thread 0003 - " + " Running time " + (serverEndTime3 - serverStartTime3) + " milliseconds");
+        }
+
         while (true) {
-            if (server1Running || server2Running)
+            if (server1Running || server2Running || server3Running) {
                 Thread.yield();
+            }
             else
                 break;
         }

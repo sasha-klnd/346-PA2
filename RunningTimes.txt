@@ -1,0 +1,13 @@
+Running times with 100-ms delay:
+    With busy-waiting:
+    - Server thread 0001: 32 milliseconds
+    - Server thread 0002: 32 milliseconds
+
+    With semaphores:
+    - Server thread 0001: 458 milliseconds
+    - Server thread 0002: 458 milliseconds
+
+    With three servers:
+    - Server thread 0001: 316 milliseconds
+    - Server thread 0002: 316 milliseconds
+    - Server thread 0003: 316 milliseconds
