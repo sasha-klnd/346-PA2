@@ -123,8 +123,7 @@ public class Client extends Thread {
         }
         setNumberOfTransactions(i); /* Record the number of transactions processed */
 
-        System.out.println(
-                "\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed");
+        // System.out.println("\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed");
 
         inputStream.close();
     }
@@ -210,8 +209,6 @@ public class Client extends Thread {
     public void run() {
         Transactions transact = new Transactions();
         long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
-        Boolean sendFlag = true;
-        Boolean receiveFlag = true;
 
         if (getClientOperation().equals("sending")) {
             sendClientStartTime = System.currentTimeMillis();
@@ -219,7 +216,6 @@ public class Client extends Thread {
             sendTransactions();
 
             sendClientEndTime = System.currentTimeMillis();
-            sendFlag = false;
             System.out.println("\nTerminating client sending thread - " + " Running time "
                     + (sendClientEndTime - sendClientStartTime) + " milliseconds");
         }
@@ -231,12 +227,11 @@ public class Client extends Thread {
             receiveTransactions(transact);
 
             receiveClientEndTime = System.currentTimeMillis();
-            receiveFlag = false;
 
             System.out.println("\nTerminating client receiving thread - " + " Running time "
                     + (receiveClientEndTime - receiveClientStartTime) + " milliseconds");
 
-            System.out.println("DISCONNECT : disconnecting client application");
+            System.out.println("Client receiving application finished execution. Disconnecting client.");
             Network.disconnect(Network.getClientIP());
         }
     }

@@ -39,10 +39,10 @@ public class Network extends Thread {
                                                             */
     private static String networkStatus; /* Network status - active, inactive */
 
-    private static Semaphore inBufferSemaphore;
-    private static Semaphore inBufferSpaceSemaphore;
-    private static Semaphore outBufferSemaphore;
-    private static Semaphore outBufferSpaceSemaphore;
+    private static Semaphore inBufferAccess;
+    private static Semaphore inBufferSpace;
+    private static Semaphore outBufferAccess;
+    private static Semaphore outBufferSpace;
 
     /**
      * Constructor of the Network class
@@ -75,11 +75,11 @@ public class Network extends Thread {
 
         networkStatus = "active";
 
-        inBufferSemaphore = new Semaphore(1, true);
-        outBufferSemaphore = new Semaphore(1, true);
+        inBufferAccess = new Semaphore(1, true);
+        outBufferAccess = new Semaphore(1, true);
 
-        inBufferSpaceSemaphore = new Semaphore(maxNbPackets, true);
-        outBufferSpaceSemaphore = new Semaphore(maxNbPackets, true);
+        inBufferSpace = new Semaphore(maxNbPackets, true);
+        outBufferSpace = new Semaphore(maxNbPackets, true);
 
     }
 
@@ -354,9 +354,8 @@ public class Network extends Thread {
     public static boolean send(Transactions inPacket) throws InterruptedException {
 
         try {
-            inBufferSpaceSemaphore.acquire();
-
-            inBufferSemaphore.acquire();
+            inBufferSpace.acquire();
+            inBufferAccess.acquire();
 
             try {
                 inComingPacket[inputIndexClient].setAccountNumber(inPacket.getAccountNumber());
@@ -391,7 +390,7 @@ public class Network extends Thread {
                 }
 
             } finally {
-                inBufferSemaphore.release();
+                inBufferAccess.release();
             }
             return true;
         } catch (InterruptedException e) {
@@ -441,7 +440,7 @@ public class Network extends Thread {
         } else {
             setOutBufferStatus("normal");
         }
-        outBufferSpaceSemaphore.release();
+        outBufferSpace.release();
 
         return true;
 
@@ -458,9 +457,9 @@ public class Network extends Thread {
     public static boolean transferOut(Transactions outPacket) throws InterruptedException{
 
         try {
-            outBufferSpaceSemaphore.acquire();
+            outBufferSpace.acquire();
 
-            outBufferSemaphore.acquire();
+            outBufferAccess.acquire();
 
             try {
                 outGoingPacket[inputIndexServer].setAccountNumber(outPacket.getAccountNumber());
@@ -497,7 +496,7 @@ public class Network extends Thread {
                     setOutBufferStatus("normal");
                 }
             } finally {
-                outBufferSemaphore.release();
+                outBufferAccess.release();
             }
             return true;
         } catch (InterruptedException e) {
@@ -522,8 +521,8 @@ public class Network extends Thread {
         inPacket.setTransactionError(inComingPacket[outputIndexServer].getTransactionError());
         inPacket.setTransactionStatus("received");
 
-        System.out.println("\n DEBUG : Network.transferIn() - index outputIndexServer " + outputIndexServer);
-        System.out.println("\n DEBUG : Network.transferIn() - account number " + inPacket.getAccountNumber());
+        // System.out.println("\n DEBUG : Network.transferIn() - index outputIndexServer " + outputIndexServer);
+        // System.out.println("\n DEBUG : Network.transferIn() - account number " + inPacket.getAccountNumber());
 
         setoutputIndexServer(((getoutputIndexServer() + 1) % getMaxNbPackets())); /*
                                                                                    * Increment the input buffer index
@@ -532,12 +531,12 @@ public class Network extends Thread {
         /* Check if input buffer is empty */
         if (getoutputIndexServer() == getinputIndexClient()) {
             setInBufferStatus("empty");
-            System.out.println("\n DEBUG : Network.transferIn() - inComingBuffer status " + getInBufferStatus());
+            // System.out.println("\n DEBUG : Network.transferIn() - inComingBuffer status " + getInBufferStatus());
         } else {
             setInBufferStatus("normal");
         }
 
-        inBufferSpaceSemaphore.release();
+        inBufferSpace.release();
 
         return true;
     }
@@ -600,13 +599,13 @@ public class Network extends Thread {
     public void run() {
         /* System.out.println("\n DEBUG : Network.run() - starting network thread"); */
 
-        System.out.println("\n DEBUG : Network.run() - starting network thread");
+        // System.out.println("\n DEBUG : Network.run() - starting network thread");
 
         while (!getClientConnectionStatus().equals("disconnected")
                 || !getServerConnectionStatus().equals("disconnected")) {
             Thread.yield();
         }
 
-        System.out.println(" DISCONNECT : Terminating network thread - Client disconnected Server disconnected");
+        System.out.println("Terminating network thread - Client disconnected Server disconnected");
     }
 }
