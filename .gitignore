@@ -1,5 +1,5 @@
 # Misc
-.pdf
+*.pdf
 .vscode/
 .DS_Store
 .DS_Store?
