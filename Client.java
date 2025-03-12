@@ -140,9 +140,9 @@ public class Client extends Thread {
         while (i < getNumberOfTransactions()) {
 
             // Busy-waiting
-            while (Network.getInBufferStatus().equals("full")) {
-                Thread.yield(); /* Yield the cpu if the network input buffer is full */
-            }
+           /*  while (Network.getInBufferStatus().equals("full")) {
+                Thread.yield();
+            } */
 
             transaction[i].setTransactionStatus("sent"); /* Set current transaction status */
             /*
@@ -152,7 +152,7 @@ public class Client extends Thread {
              */
             try {
                 Network.send(transaction[i]);
-                i++; /* Transmit current transaction */
+                i++; 
 
             } catch (InterruptedException e) {
                 System.out.println("An error occurred while sending the transaction: " + e.getMessage());
@@ -172,9 +172,9 @@ public class Client extends Thread {
 
         while (i < getNumberOfTransactions()) {
             // Busy-waiting
-            while (Network.getOutBufferStatus().equals("empty")) {
-                Thread.yield(); /* Yield the cpu if the network output buffer is full */
-            }
+            /* while (Network.getOutBufferStatus().equals("empty")) {
+                Thread.yield();
+            } */
 
             try {
                 Network.receive(transact);

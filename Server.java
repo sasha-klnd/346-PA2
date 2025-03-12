@@ -256,11 +256,11 @@ public class Server extends Thread {
         /* Process the accounts until the client disconnects */
         while ((!Network.getClientConnectionStatus().equals("disconnected"))) {
             // Busy-waiting
-            while ( (Network.getInBufferStatus().equals("empty") && !Network.getClientConnectionStatus().equals("disconnected")) ) {
+            /* while ( (Network.getInBufferStatus().equals("empty") && !Network.getClientConnectionStatus().equals("disconnected")) ) {
                 if (Network.getClientConnectionStatus().equals("disconnected"))
                     return true;
-                Thread.yield(); /* Yield the cpu if the network input buffer is empty */
-            }
+                Thread.yield();
+            } */
 
             if (!Network.getInBufferStatus().equals("empty")) {
                     // System.out.println("\n DEBUG : Server.processTransactions() - transferring in account " + trans.getAccountNumber());
@@ -294,11 +294,11 @@ public class Server extends Thread {
                         }
 
                         // Busy-waiting
-                        while (Network.getOutBufferStatus().equals("full")) {
+                       /*  while (Network.getOutBufferStatus().equals("full")) {
                             if (Network.getClientConnectionStatus().equals("disconnected"))
                                 return true;
-                            Thread.yield(); /* Yield the cpu if the network output buffer is full */
-                        }
+                            Thread.yield();
+                        } */
 
                         /*
                         * System.out.
@@ -342,12 +342,12 @@ public class Server extends Thread {
          * NEW : A server thread is blocked before updating the 10th , 20th, ... 70th
          * account balance in order to simulate an inconsistency situation
          */
-        if (((i + 1) % 10) == 0) {
+        /* if (((i + 1) % 10) == 0) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
             }
-        }
+        } */
 
         /* System.out.println("\n DEBUG : Server.deposit - " + "i " + i + " Current balance " + curBalance + " Amount "
                 + amount + " " + getServerThreadId()); */
@@ -427,7 +427,7 @@ public class Server extends Thread {
             System.out.println("\nTerminating server thread 0001 - " + " Running time " + (serverEndTime1 - serverStartTime1) + " milliseconds");
         }
 
-        if (getServerThreadId().equals("0002")) {
+        else if (getServerThreadId().equals("0002")) {
             server2Running = true;
             long serverStartTime2, serverEndTime2;
 
@@ -440,7 +440,7 @@ public class Server extends Thread {
             System.out.println("\nTerminating server thread 0002 - " + " Running time " + (serverEndTime2 - serverStartTime2) + " milliseconds");
         }
 
-        if (getServerThreadId().equals("0003")) {
+       /* else  if (getServerThreadId().equals("0003")) {
             server3Running = true;
             long serverStartTime3, serverEndTime3;
 
@@ -451,7 +451,7 @@ public class Server extends Thread {
             serverEndTime3 = System.currentTimeMillis();
             server3Running = false;
             System.out.println("\nTerminating server thread 0003 - " + " Running time " + (serverEndTime3 - serverStartTime3) + " milliseconds");
-        }
+        } */
 
         while (true) {
             if (server1Running || server2Running || server3Running) {
